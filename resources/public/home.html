@@ -17,8 +17,14 @@
     </script>
 -->
 </head>
-<body><!-- ng-app="myApp" -->  <!-- directive (attribute) "teaches your browser new tricks" - indicates angular managed application -->
+<body ng-app="todosApp">  <!-- directive (attribute) "teaches your browser new tricks" - indicates angular managed application -->
 <!-- this creates equiv of var $rootScope = {} -->
+
+
+<!---- ******* NOTE ****** At this point, you can no longer just browse this on the file system.  You need to
+       server it from a server (e.g. python -m SimpleHTTPServer)
+
+--->
 
 <!-- NOTE: you could put the ng-app for example on the div - so only that div is managed by angular.  But only
      one ng-app per page -->
@@ -41,42 +47,11 @@
             </div>
         </div>
     </div>
-    <div class="container" ng-app="myApp">
+    <div class="container">
         <div class="starter-template">
             <h1>Angudone</h1>
-            <!-- {{ }} evaluation directive ... e.g. {{ 2 + 3 }} displays 5 -->
-            <!-- binding with ng-model outside of a controller is doing $rootScope.user = { firstname: ''} -->
-            <div class="lead" ng-controller="FirstController">
-                <!-- looks up in current scope, which is in controller -->
-                <input type="text"
-                       ng-model="searchTxt.txt" />
-
-                <ul>
-                    <!-- filter to items that match searchTxt input above with .txt attribute matching (so no matching on time) -->
-                    <!-- sort by the done attribute; minus sign means descending (ascending by default) -->
-                    <li ng-repeat="t in todos | filter:searchTxt | orderBy: '-done'" >
-                        <input type="checkbox"
-                                ng-model="checked"
-                                ng-change="markDone(checked, t)"
-                                ng-checked="t.done"/>  <!--  truthy -- done is a time, so if it's set in data, checkbox is checked -->
-                        {{ t.txt }}  <!-- $first, $last, $middle - booleans valu based on position in collection -->
-                    </li>
-                </ul>
-                <form novalidate="" name="add">
-                    <!-- use nt.newTodo instead of just newTodo, so that controller function can modify the value inside
-                    the object, since primitives are passed by value -->
-                    <input type="text"
-                           ng-model="nt.newTodo"
-                           required
-                           placeholder="I want to ..." />
-
-                    <!-- required = HTML 5 attribute; form can't be submitted if blank -->
-
-                    <button ng-click="addTodo(nt)"
-                            ng-disabled="add.$invalid">Add</button>
-                </form>
-                {{ todos }}
-            </div>
+            <ng-view></ng-view> <!-- consults router (see main.js) to determine fragment to display here -->
+          </div>
         </div>
     </div>
 

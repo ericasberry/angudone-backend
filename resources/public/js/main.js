@@ -11,7 +11,17 @@
 // one problem with above example is if you minify, variable name gets changed; not a problem
 // in below example because it's a quoted string
 
-var app = angular.module("myApp", []);
+var app = angular.module("todosApp", ['ngRoute'] );
+
+app.config(function($routeProvider) {
+    // if user is going to /, map that to our fragment in /views/todos.html
+    $routeProvider
+        .when("/", {
+            templateUrl: "/views/todos.html"
+        }).otherwise( {
+            redirectTo: "/"
+        });
+})
 
 app.controller("FirstController", [
     "$scope",  // dependencies

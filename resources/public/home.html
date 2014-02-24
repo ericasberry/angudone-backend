@@ -48,15 +48,33 @@
             <!-- binding with ng-model outside of a controller is doing $rootScope.user = { firstname: ''} -->
             <div class="lead" ng-controller="FirstController">
                 <!-- looks up in current scope, which is in controller -->
+                <input type="text"
+                       ng-model="searchTxt.txt" />
+
                 <ul>
-                    <li ng-repeat="t in todos" >
+                    <!-- filter to items that match searchTxt input above with .txt attribute matching (so no matching on time) -->
+                    <!-- sort by the done attribute; minus sign means descending (ascending by default) -->
+                    <li ng-repeat="t in todos | filter:searchTxt | orderBy: '-done'" >
                         <input type="checkbox"
                                 ng-model="checked"
                                 ng-change="markDone(checked, t)"
-                                ng-checked="t.done"/>  // truthy -- done is a time, so if it's set, checkbox is checked
-                        {{ t.txt }} {{ t.done }}   <!-- $first, $last, $middle - booleans valu based on position in collection -->
+                                ng-checked="t.done"/>  <!--  truthy -- done is a time, so if it's set in data, checkbox is checked -->
+                        {{ t.txt }}  <!-- $first, $last, $middle - booleans valu based on position in collection -->
                     </li>
                 </ul>
+                <form novalidate="" name="add">
+                    <!-- use nt.newTodo instead of just newTodo, so that controller function can modify the value inside
+                    the object, since primitives are passed by value -->
+                    <input type="text"
+                           ng-model="nt.newTodo"
+                           required
+                           placeholder="I want to ..." />
+
+                    <!-- required = HTML 5 attribute; form can't be submitted if blank -->
+
+                    <button ng-click="addTodo(nt)"
+                            ng-disabled="add.$invalid">Add</button>
+                </form>
                 {{ todos }}
             </div>
         </div>

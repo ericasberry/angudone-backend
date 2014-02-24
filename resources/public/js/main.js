@@ -30,5 +30,12 @@ app.controller("FirstController", [
                 delete todo.done;
             }
         }
+
+        s.addTodo = function(newTodoObject) {
+            todos.push({
+                txt: newTodoObject.newTodo
+            })
+            newTodoObject.newTodo = ''
+        }
     }
 ]);

@@ -10,13 +10,19 @@
     <script src="js/angular.js"></script>
     <script src="js/angular-route.js"></script>
     <script src="js/main.js"></script>
-    <script>
+<!--    <script>
      angular.module("myApp", []).run(function($http){
          window.http = $http;
      });
     </script>
+-->
 </head>
-<body ng-app="myApp">
+<body><!-- ng-app="myApp" -->  <!-- directive (attribute) "teaches your browser new tricks" - indicates angular managed application -->
+<!-- this creates equiv of var $rootScope = {} -->
+
+<!-- NOTE: you could put the ng-app for example on the div - so only that div is managed by angular.  But only
+     one ng-app per page -->
+
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -35,11 +41,23 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" ng-app="myApp">
         <div class="starter-template">
             <h1>Angudone</h1>
-            <div class="lead">
-                This is where we can play!
+            <!-- {{ }} evaluation directive ... e.g. {{ 2 + 3 }} displays 5 -->
+            <!-- binding with ng-model outside of a controller is doing $rootScope.user = { firstname: ''} -->
+            <div class="lead" ng-controller="FirstController">
+                <!-- looks up in current scope, which is in controller -->
+                <ul>
+                    <li ng-repeat="t in todos" >
+                        <input type="checkbox"
+                                ng-model="checked"
+                                ng-change="markDone(checked, t)"
+                                ng-checked="t.done"/>  // truthy -- done is a time, so if it's set, checkbox is checked
+                        {{ t.txt }} {{ t.done }}   <!-- $first, $last, $middle - booleans valu based on position in collection -->
+                    </li>
+                </ul>
+                {{ todos }}
             </div>
         </div>
     </div>

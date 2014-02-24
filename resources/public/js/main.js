@@ -49,3 +49,6 @@ app.controller("FirstController", [
         }
     }
 ]);
+
+// $http for doing requests to the backend
+// $resource higher level abstraction for pure RESTful services ...
